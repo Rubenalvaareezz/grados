@@ -105,3 +105,83 @@ WHERE g.grade_value BETWEEN 5 AND 7;
 SELECT sub.subject_name,sub.credits
 FROM subjects sub
 WHERE sub.credits IN(6,12);
+
+#Personas con edad entre 20 y 30 años
+SELECT p.first_name, p.last_name, p.age
+FROM people p
+WHERE p.age BETWEEN 20 AND 30;
+
+#DISTINCT
+#Grupos
+SELECT DISTINCT g.group_name
+FROM `groups` g;
+
+#Tipos asignaturas
+SELECT DISTINCT sub.subject_type
+FROM subjects sub;
+
+#Año de grupo creado, del mas reciente al mas antiguo
+SELECT DISTINCT g.academic_year
+FROM `groups` g
+ORDER BY g.academic_year DESC;
+
+#SUBCONSULTAS
+SELECT MAX(g.grade_value) AS max_grades
+FROM grades g
+WHERE g.student_id= 6;
+
+#que alumnos estan en el grupo 2024
+#primero pregunta pequeña, grupo 2024
+
+#SELECT g.group_id
+#FROM `groups` g
+#WHERE g.academic_year = 2024;
+
+SELECT DISTINCT  sg.student_id
+FROM students_groups sg
+WHERE sg.group_id IN(
+	SELECT g.group_id
+	FROM `groups` g
+	WHERE g.academic_year = 2024)
+ORDER BY sg.student_id ASC;
+
+#asignaturas que tienen mas créditos que la media
+
+SELECT sub.subject_name, sub.credits
+FROM subjects sub
+WHERE sub.credits > (
+	SELECT AVG(sub.credits) FROM subjects sub);
+	
+#LIKE
+SELECT p.first_name, p.last_name, p.dni
+FROM people p
+WHERE p.dni LIKE '%A';
+
+SELECT sub.subject
+FROM subjects sub
+WHERE sub.subject_name LIKE 'Fundamentos%';
+
+SELECT p.first_name, p.last_name
+FROM people p
+WHERE p.first_name LIKE '_____';
+
+#FILTRAR AÑO
+
+SELECT g.group_name, g.activity, g.academic_year
+FROM `groups` g
+WHERE g.academic_year = 2024;
+
+SELECT g.group_name, g.activity, g.academic_year
+FROM `groups` g
+WHERE g.academic_year BETWEEN 2020 AND 2023
+ORDER BY g.academic_year;
+
+#VISTAS COMPLEJAS: JOIN DE VARIAS TABLAS
+#v_grades_with_honor
+CREATE OR REPLACE VIEW v_grades_with_honors AS
+SELECT g.grade_id, g.student_id, g.group_id,g.grade_value,g.exam_call
+FROM grades g
+WHERE g.with_honors = 1;
+
+	
+
