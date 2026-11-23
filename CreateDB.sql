@@ -62,7 +62,7 @@ CREATE TABLE groups(
 	activity VARCHAR(120) NOT NULL,
 	academic_year YEAR NOT NULL,
 	PRIMARY KEY(group_id),
-	FOREIGN KEY(subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE
+	FOREIGN KEY(subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE	
 	);
 CREATE TABLE students_groups (
 	student_group_id INT AUTO_INCREMENT,

@@ -1,16 +1,20 @@
 USE grados;
 
-SET FOREIGN_KEY_CHECKS = 0;
-DELETE FROM people;
-DELETE FROM professors;
-DELETE FROM students;
-DELETE FROM DEGREES;
-DELETE FROM subjects;
-DELETE FROM groups;
-DELETE FROM students_groups;
-DELETE FROM grades;
-DELETE FROM students_subjects;
-SET FOREIGN_KEY_CHECKS = 1;
+DELIMITER //
+CREATE OR REPLACE PROCEDURE p_populate()
+BEGIN
+	SET FOREIGN_KEY_CHECKS = 0;
+	DELETE FROM people;
+	DELETE FROM professors;
+	DELETE FROM students;
+	DELETE FROM DEGREES;
+	DELETE FROM subjects;
+	DELETE FROM groups;
+	DELETE FROM students_groups;
+	DELETE FROM grades;
+	DELETE FROM students_subjects;
+	DELETE FROM teaching_loads;
+	SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO people(person_id, dni, first_name, last_name, age, email)	VALUES
 	 (1, '00000001A', 'David', 'Ruiz', 50, 'druiz@us.es'),
@@ -161,3 +165,7 @@ INSERT INTO teaching_loads (professor_id, group_id, credits) VALUES
 	(3, 2, 3.0),
 	(5, 3, 1.5),
 	(4, 3, 1.5);
+	
+END//
+DELIMITER ;
+CALL p_populate();
