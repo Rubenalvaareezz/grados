@@ -26,6 +26,7 @@ BEGIN
 	DELETE FROM degrees;
 	DELETE FROM people;
 END //
-	
+
+#HOLA
 
 DELIMITER ;
